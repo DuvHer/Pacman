@@ -31,13 +31,13 @@ public class tablero extends JPanel implements ActionListener {
     private boolean ingame = false;
     private boolean dying = false;
 
-    private final int blocksize = 24;
-    private final int nrofblocks = 15;
-    private final int scrsize = nrofblocks * blocksize;
+    private final int blocksize = 24;//tamaño 
+    private final int nrofblocks = 15;//tamañp ,atriz
+    private final int scrsize = nrofblocks * blocksize;//tqamaño juego
     private final int pacanimdelay = 2;
     private final int pacmananimcount = 4;
-    private final int maxghosts = 12;
-    private final int pacmanspeed = 6;
+    private final int maxghosts = 12;//numero fantasmas
+    private final int pacmanspeed = 6;//velocidad pacman
 
     private int pacanimcount = pacanimdelay;
     private int pacanimdir = 1;
@@ -61,7 +61,7 @@ public class tablero extends JPanel implements ActionListener {
         21, 0, 0, 0, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20,
         21, 0, 0, 0, 17, 16, 16, 24, 16, 16, 16, 16, 16, 16, 20,
         17, 18, 18, 18, 16, 16, 20, 0, 17, 16, 16, 16, 16, 16, 20,
-        17, 16, 16, 16, 16, 16, 20, 0, 17, 16, 16, 16, 16, 24, 20,
+        17, 16, 16, 16, 16, 16, 20, 0, 17, 16, 2, 16, 16, 24, 20,
         25, 16, 16, 16, 24, 24, 28, 0, 25, 24, 24, 16, 20, 0, 21,
         1, 17, 16, 20, 0, 0, 0, 0, 0, 0, 0, 17, 20, 0, 21,
         1, 17, 16, 16, 18, 18, 22, 0, 19, 18, 18, 16, 20, 0, 21,
@@ -82,22 +82,23 @@ public class tablero extends JPanel implements ActionListener {
 
     public tablero() {
 
-        loadImages();
-        initVariables();
+        loadImages();// carga imagenes
+        initVariables();// incializa variables
 
-        addKeyListener(new TAdapter());
+        addKeyListener(new TAdapter());//teclado
 
         setFocusable(true);
 
-        setBackground(Color.BLACK);
+        setBackground(Color.BLUE);// color de fondo
         setDoubleBuffered(true);
     }
 
     private void initVariables() {
 
-        screendata = new short[nrofblocks * nrofblocks];
-        mazecolor = new Color(5, 100, 5);
-        d = new Dimension(400, 400);
+        //screendata = new short[nrofblocks * nrofblocks];// crear matriz
+        screendata = new short[15 * 15];// crear matriz
+        mazecolor = new Color(60, 100, 5);//Color de lineas laberinto
+        d = new Dimension(400, 400);//pinta fondo
         ghostx = new int[maxghosts];
         ghostdx = new int[maxghosts];
         ghosty = new int[maxghosts];
@@ -114,10 +115,10 @@ public class tablero extends JPanel implements ActionListener {
     public void addNotify() {
         super.addNotify();
 
-        initGame();
+       initGame();// pinta inicio
     }
 
-    private void doAnim() {
+    /*private void doAnim() {
 
         pacanimcount--;
 
@@ -129,13 +130,13 @@ public class tablero extends JPanel implements ActionListener {
                 pacanimdir = -pacanimdir;
             }
         }
-    }
+    }*/
 
     private void playGame(Graphics2D g2d) {
 
         if (dying) {
 
-            death();
+            death();// muere
 
         } else {
 
@@ -209,10 +210,10 @@ public class tablero extends JPanel implements ActionListener {
 
     private void death() {//murio
 
-        pacsleft--;
+        pacsleft--;//vidas
 
         if (pacsleft == 0) {
-            ingame = false;
+            ingame = false;//acaba juego
         }
 
         continueLevel();
@@ -472,7 +473,7 @@ public class tablero extends JPanel implements ActionListener {
         pacsleft = 3;
         score = 0;
         initLevel();
-        nrofghosts = 6;
+        nrofghosts = 10;
         currentspeed = 3;
     }
 
@@ -554,7 +555,7 @@ public class tablero extends JPanel implements ActionListener {
 
         drawMaze(g2d);
         drawScore(g2d);
-        doAnim();
+        //doAnim();
 
         if (ingame) {
             playGame(g2d);
@@ -570,7 +571,7 @@ public class tablero extends JPanel implements ActionListener {
     class TAdapter extends KeyAdapter {
 
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(KeyEvent e) {// mover con las teclas
 
             int key = e.getKeyCode();
 
